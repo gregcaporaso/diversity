@@ -6,10 +6,11 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-from qiime.plugin import Plugin, Str
+from qiime.plugin import Plugin, Str, MetadataCategory
 
 import q2_diversity
-from q2_types import FeatureTable, Frequency, DistanceMatrix, Phylogeny
+from q2_types import (FeatureTable, Frequency, DistanceMatrix, Phylogeny,
+                      RelativeFrequency)
 
 plugin = Plugin(
     name='diversity',
@@ -30,6 +31,14 @@ plugin.register_function(
     outputs=[('distance_matrix', DistanceMatrix)],
     name='Beta diversity',
     doc="Let's compute some pairwise distances!"
+)
+
+plugin.register_visualization(
+    function=q2_diversity.ancom,
+    inputs={'table': FeatureTable[Frequency | RelativeFrequency]},
+    parameters={'metadata': MetadataCategory},
+    name='ANCOM',
+    doc="Let's compute some ANCOM!"
 )
 
 plugin.register_workflow('workflows/feature_table_to_pcoa.md')

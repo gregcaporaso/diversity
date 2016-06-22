@@ -7,7 +7,8 @@
 # ----------------------------------------------------------------------------
 
 from ._beta import beta_diversity
+from ._differential_abundance import ancom
 
 __version__ = "0.0.0-dev"
 
-__all__ = ['beta_diversity']
+__all__ = ['beta_diversity', 'ancom']
