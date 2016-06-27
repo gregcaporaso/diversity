@@ -8,11 +8,12 @@
 
 import biom
 import qiime
+import skbio
 import skbio.stats.composition
 
 def ancom(output_dir: str, table: biom.Table,
           metadata: qiime.MetadataCategory) -> None:
-
+    print('md:', metadata)
     ancom_df, percentile_df = \
         skbio.stats.composition.ancom(table, metadata.to_series())
 
@@ -23,3 +24,7 @@ def ancom(output_dir: str, table: biom.Table,
         fh.write('<h1>Percentile abundances</h1><br>')
         fh.write('%s<br>\n' % percentile_df.to_html())
         fh.write('</body></html>')
+
+def noop(metadata: qiime.Metadata) -> skbio.DistanceMatrix:
+    print('md:', metadata)
+    return skbio.DistanceMatrix([[0.0]])
