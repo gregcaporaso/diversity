@@ -13,7 +13,6 @@ import skbio.stats.composition
 
 def ancom(output_dir: str, table: biom.Table,
           metadata: qiime.MetadataCategory) -> None:
-    print('md:', metadata)
     ancom_df, percentile_df = \
         skbio.stats.composition.ancom(table, metadata.to_series())
 
@@ -26,5 +25,4 @@ def ancom(output_dir: str, table: biom.Table,
         fh.write('</body></html>')
 
 def noop(metadata: qiime.Metadata) -> skbio.DistanceMatrix:
-    print('md:', metadata)
     return skbio.DistanceMatrix([[0.0]])
