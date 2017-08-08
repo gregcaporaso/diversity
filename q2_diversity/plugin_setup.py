@@ -351,3 +351,33 @@ plugin.visualizers.register_function(
     description=('Determine whether numeric sample metadata category is '
                  'correlated with alpha diversity.')
 )
+
+color_schemes = [
+    'BrBG', 'BrBG_r', 'PRGn', 'PRGn_r', 'PiYG', 'PiYG_r',
+    'PuOr', 'PuOr_r', 'RdBu', 'RdBu_r', 'RdGy', 'RdGy_r',
+    'RdYlBu', 'RdYlBu_r', 'RdYlGn', 'RdYlGn_r']
+plugin.visualizers.register_function(
+    function=q2_diversity._beta._visualizer.beta_rarefaction,
+    inputs={'table': FeatureTable[Frequency], 'phylogeny': Phylogeny[Rooted]},
+    parameters={'sampling_depth': Int, 'metric': Str, 'num_iterations': Int,
+                'color_scheme': Str % Choices(color_schemes),
+                'method': Str % Choices(beta_correlation_methods)},
+    input_descriptions={
+        'table': ('The feature table containing the samples over which '
+                  'jacknife comparison should be computed.'),
+        'phylogeny': ('Phylogenetic tree containing tip identifiers that '
+                      'correspond to the feature identifiers in the table. '
+                      'This tree can contain tip ids that are not present in '
+                      'the table, but all feature ids in the table must be '
+                      'present in this tree.')
+    },
+    parameter_descriptions={
+        'sampling_depth': ('The total frequency that each sample should be '
+                           'rarefied to prior to computing diversity '
+                           'metrics.'),
+        'metric': 'The beta diversity metric to be computed.',
+        'num_iterations': 'Number of rarefied tables to be created.'
+    },
+    name='Beta rarefaction comparison',
+    description='Performs jacknife comparison upon FeatureTable.'
+)
